@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>مستنداتي</title>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f4f5f8;--card:#fff;--ink:#1a2233;--mute:#6b7488;--line:#e3e6ee;--acc:#2f5bea;--acc2:#e8eeff;--fold:#f0a92e;--danger:#d64545;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#11151d;--card:#1b212c;--ink:#eef1f7;--mute:#8f99ae;--line:#2a3140;--acc:#6f8cff;--acc2:#222c4a}}
+:root[data-theme="dark"]{--bg:#11151d;--card:#1b212c;--ink:#eef1f7;--mute:#8f99ae;--line:#2a3140;--acc:#6f8cff;--acc2:#222c4a}
+*{box-sizing:border-box}html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"IBM Plex Sans Arabic",Tahoma,sans-serif;min-height:100vh}
+#app{max-width:720px;margin:0 auto;padding:0 16px 96px}
+header{position:sticky;top:env(safe-area-inset-top,0px);background:var(--bg);padding:14px 0 8px;z-index:5}
+h1{font-size:22px;margin:0 0 10px;font-weight:600}
+.crumbs{display:flex;gap:6px;flex-wrap:wrap;font-size:14px;color:var(--mute);margin-bottom:10px}
+.crumbs button{background:none;border:0;color:var(--acc);font:inherit;padding:2px 0;cursor:pointer}
+.search{width:100%;padding:11px 14px;border-radius:12px;border:1px solid var(--line);background:var(--card);color:var(--ink);font:inherit;font-size:15px}
+.row{display:flex;align-items:center;gap:12px;background:var(--card);border-bottom:1px solid var(--line);padding:11px 12px;cursor:pointer}
+.list{border-radius:14px;overflow:hidden;border:1px solid var(--line);margin-top:8px}
+.list .row:last-child{border-bottom:0}
+.ic{width:42px;height:42px;border-radius:10px;display:grid;place-items:center;flex:none;font-size:11px;font-weight:600;color:#fff;background:var(--acc)}
+.ic.folder{background:var(--fold);font-size:20px}
+.meta{flex:1;min-width:0}.meta b{display:block;font-weight:500;font-size:15px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.meta span{font-size:12px;color:var(--mute)}
+.more{background:none;border:0;color:var(--mute);font-size:22px;padding:4px 8px;cursor:pointer}
+.star{color:var(--fold);font-size:14px}
+.empty{text-align:center;color:var(--mute);padding:60px 20px;line-height:1.9}
+nav{position:fixed;bottom:0;inset-inline:0;background:var(--card);border-top:1px solid var(--line);display:flex;justify-content:center;padding:6px 0 calc(6px + env(safe-area-inset-bottom,0px))}
+nav button{flex:1;max-width:180px;background:none;border:0;color:var(--mute);font:inherit;font-size:12px;padding:6px;cursor:pointer}
+nav button.on{color:var(--acc);font-weight:600}nav i{display:block;font-style:normal;font-size:20px}
+.fab{position:fixed;bottom:calc(74px + env(safe-area-inset-bottom,0px));inset-inline-start:20px;width:56px;height:56px;border-radius:50%;border:0;background:var(--acc);color:#fff;font-size:30px;cursor:pointer;box-shadow:0 6px 18px rgba(47,91,234,.4)}
+.ov{position:fixed;inset:0;background:rgba(10,14,24,.5);display:flex;align-items:flex-end;justify-content:center;z-index:20}
+.sheet{background:var(--card);width:100%;max-width:720px;border-radius:18px 18px 0 0;padding:14px 14px calc(16px + env(safe-area-inset-bottom,0px));max-height:80vh;overflow:auto}
+.sheet h3{margin:4px 6px 10px;font-size:15px;color:var(--mute);font-weight:500}
+.sheet button.a{display:block;width:100%;text-align:start;background:none;border:0;border-radius:10px;padding:13px 10px;font:inherit;font-size:16px;color:var(--ink);cursor:pointer}
+.sheet button.a:active,.sheet button.a:hover{background:var(--acc2)}.sheet .del{color:var(--danger)}
+.sheet input{width:100%;padding:12px;border-radius:10px;border:1px solid var(--line);background:var(--bg);color:var(--ink);font:inherit;font-size:16px;margin-bottom:10px}
+.btns{display:flex;gap:8px}.btns button{flex:1;padding:12px;border-radius:10px;border:1px solid var(--line);background:var(--card);color:var(--ink);font:inherit;cursor:pointer}
+.btns .go{background:var(--acc);color:#fff;border-color:var(--acc)}
+.view{position:fixed;inset:0;background:var(--bg);z-index:30;display:flex;flex-direction:column;padding-top:env(safe-area-inset-top,0px)}
+.vh{display:flex;align-items:center;gap:10px;padding:10px 14px;border-bottom:1px solid var(--line);background:var(--card)}
+.vh b{flex:1;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.vh button{background:none;border:0;color:var(--acc);font:inherit;font-size:16px;cursor:pointer}
+.vb{flex:1;overflow:auto;display:grid;place-items:center;padding:10px}
+.vb img,.vb video{max-width:100%;max-height:100%}.vb iframe{width:100%;height:100%;border:0;background:#fff}
+.vb pre{width:100%;align-self:start;white-space:pre-wrap;word-break:break-word;direction:auto;font:14px/1.7 ui-monospace,Menlo,monospace;margin:0}
+.toast{position:fixed;bottom:calc(90px + env(safe-area-inset-bottom,0px));left:50%;transform:translateX(-50%);background:var(--ink);color:var(--bg);padding:9px 16px;border-radius:20px;font-size:14px;z-index:40}
+button:focus-visible,input:focus-visible{outline:2px solid var(--acc);outline-offset:2px}
+</style>
+</head>
+<body>
+<div id="app"></div>
+<input type="file" id="pick" multiple hidden>
+<script>
+const $=s=>document.querySelector(s);
+let items=[],cwd=null,tab='files',q='',db=null;
+const dbp=new Promise(res=>{try{const r=indexedDB.open('docs-app',1);r.onupgradeneeded=()=>r.result.createObjectStore('items',{keyPath:'id'});r.onsuccess=()=>res(r.result);r.onerror=()=>res(null)}catch(e){res(null)}});
+const tx=(m,f)=>new Promise(res=>{if(!db)return res([]);try{const t=db.transaction('items',m),s=t.objectStore('items'),r=f(s);t.oncomplete=()=>res(r&&r.result);t.onerror=()=>res(null)}catch(e){res(null)}});
+const save=o=>tx('readwrite',s=>s.put(o)),drop=id=>tx('readwrite',s=>s.delete(id));
+const uid=()=>Date.now().toString(36)+Math.random().toString(36).slice(2,6);
+function toast(t){const e=document.createElement('div');e.className='toast';e.textContent=t;document.body.append(e);setTimeout(()=>e.remove(),1800)}
+const kind=i=>{if(i.type==='folder')return'folder';const m=i.mime||'',n=i.name.toLowerCase();if(m.startsWith('image/'))return'img';if(m.startsWith('video/'))return'vid';if(m.startsWith('audio/'))return'aud';if(m==='application/pdf'||n.endsWith('.pdf'))return'pdf';if(m.startsWith('text/')||/\.(txt|md|json|csv|xml|html|js|css)$/.test(n))return'txt';return'file'};
+const tag={img:'IMG',vid:'MP4',aud:'MP3',pdf:'PDF',txt:'TXT',file:'ملف'};
+const size=b=>b<1024?b+' B':b<1048576?(b/1024).toFixed(0)+' KB':(b/1048576).toFixed(1)+' MB';
+const day=t=>new Date(t).toLocaleDateString('ar',{day:'numeric',month:'short'});
+const esc=s=>s.replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+function visible(){
+  let l=items;
+  if(q)l=l.filter(i=>i.name.toLowerCase().includes(q.toLowerCase()));
+  else if(tab==='files')l=l.filter(i=>i.parent===cwd);
+  else if(tab==='fav')l=l.filter(i=>i.fav);
+  else l=l.filter(i=>i.type==='file').sort((a,b)=>b.ts-a.ts).slice(0,20);
+  return tab==='recent'&&!q?l:l.sort((a,b)=>(a.type===b.type?0:a.type==='folder'?-1:1)||a.name.localeCompare(b.name,'ar'));
+}
+function path(){const p=[];let c=cwd;while(c){const f=items.find(i=>i.id===c);if(!f)break;p.unshift(f);c=f.parent}return p}
+function render(){
+  const l=visible(),titles={files:'الملفات',fav:'المفضلة',recent:'الأخيرة'};
+  const crumbs=tab==='files'&&!q?`<div class="crumbs"><button data-go="">الرئيسية</button>${path().map(f=>`<span>‹</span><button data-go="${f.id}">${esc(f.name)}</button>`).join('')}</div>`:'';
+  $('#app').innerHTML=`<header><h1>${q?'نتائج البحث':titles[tab]}</h1>${crumbs}<input class="search" id="q" type="search" placeholder="ابحث في ملفاتك" value="${esc(q)}"></header>
+  ${l.length?`<div class="list">${l.map(i=>{const k=kind(i);return`<div class="row" data-id="${i.id}"><div class="ic ${k==='folder'?'folder':''}">${k==='folder'?'📁':tag[k]}</div><div class="meta"><b>${esc(i.name)}</b><span>${i.type==='folder'?items.filter(x=>x.parent===i.id).length+' عنصر':size(i.size)} · ${day(i.ts)}</span></div>${i.fav?'<span class="star">★</span>':''}<button class="more" data-more="${i.id}" aria-label="خيارات">⋯</button></div>`}).join('')}</div>`
+  :`<div class="empty">${q?'لا توجد نتائج مطابقة.':tab==='fav'?'لا توجد عناصر مفضلة بعد.<br>اضغط ⋯ على أي ملف ثم «إضافة إلى المفضلة».':tab==='recent'?'لم تضف أي ملفات بعد.':'هذا المجلد فارغ.<br>اضغط + لرفع ملفات أو إنشاء مجلد.'}</div>`}
+  ${tab==='files'?'<button class="fab" id="fab" aria-label="إضافة">+</button>':''}
+  <nav>${[['files','🗂️','الملفات'],['fav','⭐','المفضلة'],['recent','🕘','الأخيرة']].map(([k,e,t])=>`<button data-tab="${k}" class="${tab===k?'on':''}"><i>${e}</i>${t}</button>`).join('')}</nav>`;
+  const s=$('#q');s.oninput=e=>{q=e.target.value;const p=e.target.selectionStart;render();const n=$('#q');n.focus();n.setSelectionRange(p,p)};
+}
+document.addEventListener('click',e=>{
+  const t=e.target.closest('[data-tab],[data-go],[data-more],.row,#fab');if(!t)return;
+  if(t.dataset.tab){tab=t.dataset.tab;q='';render()}
+  else if(t.dataset.go!==undefined){cwd=t.dataset.go||null;render()}
+  else if(t.dataset.more)actions(t.dataset.more);
+  else if(t.id==='fab')addMenu();
+  else if(t.dataset.id)open(t.dataset.id);
+});
+function sheet(html){closeSheet();const o=document.createElement('div');o.className='ov';o.id='ov';o.innerHTML=`<div class="sheet">${html}</div>`;o.onclick=e=>{if(e.target===o)closeSheet()};document.body.append(o);return o}
+function closeSheet(){const o=$('#ov');if(o)o.remove()}
+function ask(title,val,ok,cb){const o=sheet(`<h3>${title}</h3><input id="inp" value="${esc(val)}"><div class="btns"><button id="no">إلغاء</button><button class="go" id="yes">${ok}</button></div>`);const i=$('#inp');i.focus();i.select();$('#no').onclick=closeSheet;const go=()=>{const v=i.value.trim();if(v){closeSheet();cb(v)}};$('#yes').onclick=go;i.onkeydown=e=>{if(e.key==='Enter')go()}}
+function addMenu(){const o=sheet(`<h3>إضافة</h3><button class="a" id="up">⬆️ رفع ملفات من جهازك</button><button class="a" id="nf">📁 مجلد جديد</button><button class="a" id="nt">📝 ملف نصي جديد</button>`);
+  $('#up').onclick=()=>{closeSheet();$('#pick').click()};
+  $('#nf').onclick=()=>ask('اسم المجلد','','إنشاء',async n=>{const o={id:uid(),name:n,type:'folder',parent:cwd,ts:Date.now(),size:0};items.push(o);await save(o);render()});
+  $('#nt').onclick=()=>ask('اسم الملف','ملاحظة.txt','إنشاء',async n=>{const b=new Blob([''],{type:'text/plain'});const o={id:uid(),name:n,type:'file',parent:cwd,mime:'text/plain',size:0,blob:b,ts:Date.now()};items.push(o);await save(o);render();open(o.id)});}
+$('#pick').onchange=async e=>{for(const f of e.target.files){const o={id:uid(),name:f.name,type:'file',parent:cwd,mime:f.type,size:f.size,blob:f,ts:Date.now()};items.push(o);await save(o)}e.target.value='';render();toast('تم رفع الملفات')};
+function actions(id){const i=items.find(x=>x.id===id);const o=sheet(`<h3>${esc(i.name)}</h3><button class="a" data-a="open">فتح</button><button class="a" data-a="ren">إعادة تسمية</button><button class="a" data-a="fav">${i.fav?'إزالة من المفضلة':'إضافة إلى المفضلة'}</button><button class="a" data-a="mv">نقل إلى…</button><button class="a del" data-a="rm">حذف</button>`);
+  o.onclick=async e=>{const a=e.target.dataset.a;if(!a){if(e.target===o)closeSheet();return}closeSheet();
+    if(a==='open')open(id);
+    if(a==='ren')ask('الاسم الجديد',i.name,'حفظ',async n=>{i.name=n;await save(i);render()});
+    if(a==='fav'){i.fav=!i.fav;await save(i);render()}
+    if(a==='mv')move(i);
+    if(a==='rm'){const ids=[i.id];for(let k=0;k<ids.length;k++)items.filter(x=>x.parent===ids[k]).forEach(x=>ids.push(x.id));items=items.filter(x=>!ids.includes(x.id));for(const d of ids)await drop(d);render();toast('تم الحذف')}}}
+function move(i){const bad=new Set([i.id]);let ch=true;while(ch){ch=false;items.forEach(x=>{if(bad.has(x.parent)&&!bad.has(x.id)){bad.add(x.id);ch=true}})}
+  const fs=items.filter(x=>x.type==='folder'&&!bad.has(x.id));
+  const o=sheet(`<h3>انقل إلى</h3><button class="a" data-t="">🏠 الرئيسية</button>${fs.map(f=>`<button class="a" data-t="${f.id}">📁 ${esc(f.name)}</button>`).join('')}`);
+  o.onclick=async e=>{const t=e.target.dataset.t;if(t===undefined){if(e.target===o)closeSheet();return}closeSheet();i.parent=t||null;await save(i);render();toast('تم النقل')}}
+async function open(id){const i=items.find(x=>x.id===id);if(i.type==='folder'){cwd=i.id;tab='files';q='';return render()}
+  const k=kind(i),u=URL.createObjectURL(i.blob);let body='';
+  if(k==='img')body=`<img src="${u}" alt="">`;else if(k==='vid')body=`<video src="${u}" controls playsinline></video>`;else if(k==='aud')body=`<audio src="${u}" controls></audio>`;else if(k==='pdf')body=`<iframe src="${u}" title="${esc(i.name)}"></iframe>`;
+  else if(k==='txt'){const t=await i.blob.text();body=`<pre contenteditable="true" id="ed">${esc(t)}</pre>`}
+  else body=`<div class="empty">لا توجد معاينة لهذا النوع من الملفات.</div>`;
+  const v=document.createElement('div');v.className='view';v.innerHTML=`<div class="vh"><button id="x">‹ رجوع</button><b>${esc(i.name)}</b>${k==='txt'?'<button id="sv">حفظ</button>':''}</div><div class="vb">${body}</div>`;document.body.append(v);
+  $('#x').onclick=()=>{v.remove();URL.revokeObjectURL(u);render()};
+  if(k==='txt')$('#sv').onclick=async()=>{const b=new Blob([$('#ed').innerText],{type:'text/plain'});i.blob=b;i.size=b.size;i.ts=Date.now();await save(i);toast('تم الحفظ')};
+  i.ts=Date.now();save(i)}
+(async()=>{db=await dbp;const r=await tx('readonly',s=>s.getAll());items=r||[];render()})();
+</script>
+</body>
+</html>
